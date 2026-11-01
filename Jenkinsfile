@@ -9,10 +9,13 @@ def run(cmd) {
 
 def awsRun(cmd) {
     withCredentials([
-        string(credentialsId: 'aws-key-id', variable: 'AKIAT67QWFF6K2FAPSGE'),
-        string(credentialsId: 'aws-secret', variable: 'AWS_SECRET_ACCESS_KEY')
+        string(credentialsId: 'aws-key-id',
+               variable: 'AWS_ACCESS_KEY_ID'),
+
+        string(credentialsId: 'aws-secret',
+               variable: 'AWS_SECRET_ACCESS_KEY')
     ]) {
-        withEnv(['AWS_DEFAULT_REGION=' + env.REGION]) {
+        withEnv(["AWS_DEFAULT_REGION=${env.REGION}"]) {
             run(cmd)
         }
     }
@@ -39,7 +42,7 @@ pipeline {
 
     environment {
         REGION   = 'ap-south-1'
-        ACCOUNT  = '123456789012'
+        ACCOUNT  = '272698321276'
         REPO     = 'hello-jenkins'
         INSTANCE = 'none'
 
@@ -49,6 +52,13 @@ pipeline {
     }
 
     stages {
+
+        stage('Check Tools') {
+            steps {
+                bat 'docker --version'
+                bat 'aws --version'
+            }
+        }
 
         stage('Build') {
             steps {
@@ -69,6 +79,10 @@ pipeline {
         stage('Push') {
             steps {
                 script {
+                    awsRun(
+                        "aws sts get-caller-identity"
+                    )
+
                     ecrLogin()
 
                     run "docker tag ${IMG} ${REMOTE}"
@@ -80,7 +94,7 @@ pipeline {
         stage('Deploy') {
             when {
                 expression {
-                    return env.INSTANCE != 'none'
+                    env.INSTANCE != 'none'
                 }
             }
 
@@ -98,7 +112,7 @@ pipeline {
         }
 
         failure {
-            echo 'Pipeline failed. Check the console output.'
+            echo 'Pipeline failed. Check Console Output.'
         }
     }
 }
