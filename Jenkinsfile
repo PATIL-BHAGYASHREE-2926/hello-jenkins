@@ -1,4 +1,5 @@
 def run(cmd) { if (isUnix()) { sh cmd) else { bat cmd } }
+              
 def awsRun(cmd) {
   withCredentials([
     string(credentialsId: 'aws-key-id', variable: 'AWS_ACCESS_KEY_ID'), 
@@ -13,7 +14,7 @@ def ecrLogin() {
 
 def deploy() {
   awsRun "aws ssm send-command-region $(env.REGION)" + 
-  "--instance-ids $(env.INSTANCE) +
-  "--document-name AWS-RunShellScript-parameters
+    "--instance-ids $(env.INSTANCE) +
+    "--document-name AWS-RunShellScript-parameters
 file://deploy.json"
 }
