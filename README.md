@@ -123,6 +123,9 @@ AWS credentials are stored securely in Jenkins Credentials and injected into the
 - Implement build versioning and rollback.
 - Configure HTTPS using a domain and SSL certificate.
 - Add monitoring and logging.
+## 🙌 Acknowledgement
+
+Special thanks to **[Deboistech](https://deboistech.com/)** for the guidance, learning resources and inspiration behind this mini project.
 
 ## 👩‍💻 Author
 
