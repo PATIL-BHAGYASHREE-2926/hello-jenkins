@@ -1,3 +1,16 @@
+pipeline{
+  agent any
+  environment {
+    REGION = 'ap-soutnh-1'
+    ACCOUNT = '123456789012'
+    REPO = 'hello-jenkins'
+    INSTANCE = 'none'
+    REGISTRY="${ACCOUNT}.dkr.ecr.${REGION}.amazonaws.com"
+    IMG ="${REPO}:${BUILD_NUMBER}"
+    REMOTE ="${REGISTRY}/${REPO}:latest"
+  }
+}
+
 def run(cmd) { if (isUnix()) { sh cmd) else { bat cmd } }
               
 def awsRun(cmd) {
