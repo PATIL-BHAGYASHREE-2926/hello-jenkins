@@ -1,4 +1,3 @@
-
 def run(cmd) {
     if (isUnix()) {
         sh cmd
@@ -27,15 +26,6 @@ def ecrLogin() {
     )
 }
 
-def deploy() {
-    awsRun(
-        "aws ssm send-command --region ${env.REGION} " +
-        "--instance-ids ${env.INSTANCE} " +
-        "--document-name AWS-RunShellScript " +
-        "--parameters file://deploy.json"
-    )
-}
-
 pipeline {
     agent any
 
@@ -43,7 +33,6 @@ pipeline {
         REGION   = 'ap-south-1'
         ACCOUNT  = '272698321276'
         REPO     = 'hello-jenkins'
-        INSTANCE = 'i-08e0d888ee1dd8352'
 
         REGISTRY = "${ACCOUNT}.dkr.ecr.${REGION}.amazonaws.com"
         IMG      = "${REPO}:${BUILD_NUMBER}"
@@ -86,20 +75,6 @@ pipeline {
 
                     run "docker tag ${IMG} ${REMOTE}"
                     run "docker push ${REMOTE}"
-                }
-            }
-        }
-
-        stage('Deploy') {
-            when {
-                expression {
-                    env.INSTANCE != 'none'
-                }
-            }
-
-            steps {
-                script {
-                    deploy()
                 }
             }
         }
