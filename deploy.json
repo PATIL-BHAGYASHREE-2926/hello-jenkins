@@ -1,0 +1,9 @@
+   {
+     "commands": [
+       "REGISTRY=272698321276.dkr.ecr.ap-south-1.amazonaws.com",
+       "aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin $REGISTRY",
+       "docker pull $REGISTRY/hello-jenkins:latest",
+       "docker rm -f hello-web || true",
+       "docker run -d --name hello-web --restart always -p 80:80 $REGISTRY/hello-jenkins:latest"
+     ]
+   }
