@@ -89,7 +89,7 @@ pipeline {
             }
         }
 
-        stage('Deploy') stage('Deploy') {
+        stage('Deploy'){
             when {
                 expression { false }
             }
