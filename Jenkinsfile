@@ -27,7 +27,7 @@ def ecrLogin() {
 }
 
 def deploy() {
-    awsRun(
+     awsRun(
         "aws ssm send-command --region ${env.REGION} " +
         "--instance-ids ${env.INSTANCE} " +
         "--document-name AWS-RunShellScript " +
@@ -42,7 +42,7 @@ pipeline {
         REGION   = 'ap-south-1'
         ACCOUNT  = '272698321276'
         REPO     = 'hello-jenkins'
-        INSTANCE = 'none'
+        INSTANCE = 'i-08e0d0888ee1dd8352'
 
         REGISTRY = "${ACCOUNT}.dkr.ecr.${REGION}.amazonaws.com"
         IMG      = "${REPO}:${BUILD_NUMBER}"
