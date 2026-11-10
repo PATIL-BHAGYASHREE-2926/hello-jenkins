@@ -89,17 +89,12 @@ pipeline {
             }
         }
 
-        stage('Deploy') {
+        stage('Deploy') stage('Deploy') {
             when {
-                expression {
-                    env.INSTANCE != 'none'
-                }
+                expression { false }
             }
-
             steps {
-                script {
-                    deploy()
-                }
+                echo 'EC2 deployment skipped.'
             }
         }
     }
