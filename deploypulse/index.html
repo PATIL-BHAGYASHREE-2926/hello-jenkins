@@ -1,0 +1,150 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DeployPulse | DevOps Monitor</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand">◈ Deploy<span>Pulse</span></div>
+    <p class="nav-label">WORKSPACE</p>
+    <a class="active">▦ Overview</a>
+    <a>⇄ Pipeline Monitor</a>
+    <a>◷ Build History</a>
+    <a>☁ Infrastructure</a>
+    <div class="side-bottom">
+      <span class="status-dot"></span> Project: hello-jenkins
+      <p>DevOps Monitoring</p>
+    </div>
+  </aside>
+
+  <main>
+    <header>
+      <div>
+        <p class="eyebrow">DEVOPS / MONITORING</p>
+        <h1>Deployment Overview</h1>
+        <p class="muted">Monitor your CI/CD workflow in one place.</p>
+      </div>
+      <div class="live"><span class="status-dot"></span> Dashboard Online</div>
+    </header>
+
+    <section class="welcome">
+      <div>
+        <p>YOUR DEPLOYMENT WORKSPACE</p>
+        <h2>Build. Ship. Deploy.</h2>
+        <p>From source code to cloud infrastructure.</p>
+      </div>
+      <div class="welcome-icon">⌘</div>
+    </section>
+
+    <section class="metrics">
+      <article class="metric">
+        <p>Total Builds</p>
+        <h2>10</h2>
+        <small>Recorded Jenkins build</small>
+      </article>
+      <article class="metric">
+        <p>Successful Builds</p>
+        <h2 class="green">10</h2>
+        <small>Based on current records</small>
+      </article>
+      <article class="metric">
+        <p>Failed Builds</p>
+        <h2>0</h2>
+        <small>Based on current records</small>
+      </article>
+      <article class="metric">
+        <p>Cloud Instance</p>
+        <h2 class="green">Running</h2>
+        <small>AWS EC2 · t3.micro</small>
+      </article>
+    </section>
+
+    <section class="panel">
+      <div class="panel-heading">
+        <div>
+          <h3>CI/CD Pipeline</h3>
+          <p class="muted">Your deployment workflow</p>
+        </div>
+        <span class="tag">PIPELINE OVERVIEW</span>
+      </div>
+
+      <div class="pipeline">
+        <div class="stage">
+          <div class="stage-icon">⌘</div>
+          <b>GitHub</b>
+          <small>Source Code</small>
+        </div>
+        <div class="connector"></div>
+        <div class="stage">
+          <div class="stage-icon">J</div>
+          <b>Jenkins</b>
+          <small>Build & Test</small>
+        </div>
+        <div class="connector"></div>
+        <div class="stage">
+          <div class="stage-icon">▣</div>
+          <b>Docker</b>
+          <small>Container</small>
+        </div>
+        <div class="connector"></div>
+        <div class="stage">
+          <div class="stage-icon">☁</div>
+          <b>AWS EC2</b>
+          <small>Deployment</small>
+        </div>
+      </div>
+      <p class="pipeline-note">
+        Architecture visualization · Deployment stages are not live-integrated yet.
+      </p>
+    </section>
+
+    <div class="lower-grid">
+      <section class="panel">
+        <h3>Latest Build</h3>
+        <div class="build-row">
+          <div>
+            <b>Build #10</b>
+            <p class="muted">hello-pipeline</p>
+          </div>
+          <span class="success-tag">✓ SUCCESS</span>
+        </div>
+        <div class="details">
+          <p>Pipeline duration <b>~30 sec</b></p>
+          <p>Build tool <b>Jenkins</b></p>
+          <p>Container platform <b>Docker</b></p>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h3>Infrastructure</h3>
+        <div class="infra-row">
+          <span>☁ AWS EC2</span>
+          <span class="success-tag">Running</span>
+        </div>
+        <div class="infra-row">
+          <span>▣ Docker</span>
+          <span class="tag">Container platform</span>
+        </div>
+        <div class="infra-row">
+          <span>🌐 Nginx</span>
+          <span class="tag">Web server</span>
+        </div>
+        <div class="infra-row">
+          <span>⚙ Jenkins</span>
+          <span class="success-tag">Build #10 passed</span>
+        </div>
+      </section>
+    </div>
+
+    <footer>
+      DeployPulse · Built with Jenkins, Docker & AWS
+      <span id="clock"></span>
+    </footer>
+  </main>
+</body>
+</html>
