@@ -42,7 +42,7 @@ pipeline {
         REGION   = 'ap-south-1'
         ACCOUNT  = '272698321276'
         REPO     = 'hello-jenkins'
-        INSTANCE = 'i-08e0d0888ee1dd8352'
+        INSTANCE = 'i-08e0d888ee1dd8352'
 
         REGISTRY = "${ACCOUNT}.dkr.ecr.${REGION}.amazonaws.com"
         IMG      = "${REPO}:${BUILD_NUMBER}"
@@ -89,12 +89,14 @@ pipeline {
             }
         }
 
-        stage('Deploy'){
+        stage('Deploy') {
             when {
-                expression { false }
+                expression { env.INSTANCE != 'none' }
             }
             steps {
-                echo 'EC2 deployment skipped.'
+                script {
+                    deploy()
+                }
             }
         }
     }
