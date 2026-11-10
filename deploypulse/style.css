@@ -236,3 +236,38 @@ footer {
   .stage { width: 42%; margin-bottom: 20px; }
   footer { flex-direction: column; gap: 10px; }
 }
+
+html {
+  scroll-behavior: smooth;
+}
+
+section[id] {
+  scroll-margin-top: 25px;
+}
+
+.sidebar a {
+  cursor: pointer;
+}
+
+/* Remove default link underline */
+.sidebar a {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* Hover effect */
+.sidebar a:hover {
+  color: #35e6ad;
+  background: rgba(53, 230, 173, 0.10);
+}
+
+/* Active navigation */
+.sidebar a.active {
+  color: #35e6ad;
+  background: rgba(53, 230, 173, 0.16);
+  font-weight: 600;
+  text-decoration: none;
+}
