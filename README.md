@@ -99,10 +99,11 @@ Check the command status to verify whether the deployment completed successfully
 
 ---
 
+
 ## 📁 Project Structure
 
 ```text
-hello-jinkins/
+hello-jenkins/
 │
 ├── backend/
 │   ├── server.js              # Express API and Jenkins integration
@@ -115,7 +116,12 @@ hello-jinkins/
 │   ├── script.js              # Frontend logic and data rendering
 │   └── builds.json            # Jenkins build snapshot
 │
-├── docs/                      # README screenshots
+├── docs/
+│   ├── TROUBLESHOOTING.md     # Problems, debugging and solutions
+│   ├── dashboard.png          # Dashboard screenshot
+│   ├── jenkins-stage-view.png # Jenkins pipeline screenshot
+│   └── infrastructure.png     # Infrastructure panel screenshot
+│
 ├── Dockerfile                 # Nginx-based Docker image
 ├── Jenkinsfile                # CI/CD pipeline definition
 ├── deploy.json                # EC2 deployment commands
@@ -227,6 +233,14 @@ The Node.js and Express backend exposes the following endpoints:
 - Store completed build logs in the generated snapshot.
 - Display live Jenkins pipeline stage status instead of build-level status.
 - Implement post-deployment health checks to verify successful container replacement.
+
+---
+
+## 📚 Documentation
+
+For a detailed breakdown of the technical challenges encountered during development, their root causes, debugging process, and implemented solutions, see:
+
+- [Troubleshooting & Problem Solving](docs/TROUBLESHOOTING.md)
 
 ---
 
