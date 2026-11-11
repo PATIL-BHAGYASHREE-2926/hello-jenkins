@@ -58,6 +58,52 @@ pipeline {
             }
         }
 
+        stage('Snapshot Builds') {
+            steps {
+                script {
+                    def builds = []
+
+                    // Current build, shown as RUNNING because it hasn't finished
+                    builds << [
+                        number   : currentBuild.number,
+                        result   : 'RUNNING',
+                        duration : 0,
+                        timestamp: currentBuild.timeInMillis
+                    ]
+
+                    // Earlier builds of this job (up to 20)
+                    def prev = currentBuild.previousBuild
+                    def count = 0
+                    while (prev != null && count < 20) {
+                        builds << [
+                            number   : prev.number,
+                            result   : prev.result ?: 'RUNNING',
+                            duration : prev.duration,
+                            timestamp: prev.timeInMillis
+                        ]
+                        prev = prev.previousBuild
+                        count++
+                    }
+
+                    def successful = builds.count { it.result == 'SUCCESS' }
+                    def failed     = builds.count { it.result == 'FAILURE' }
+
+                    def snapshot = [
+                        status          : 'success',
+                        job             : 'deploypulse-pipeline',
+                        totalBuilds     : builds.size(),
+                        successfulBuilds: successful,
+                        failedBuilds    : failed,
+                        builds          : builds
+                    ]
+
+                    writeFile file: 'deploypulse/builds.json',
+                            text: groovy.json.JsonOutput.prettyPrint(
+                                groovy.json.JsonOutput.toJson(snapshot))
+                }
+            }
+        }
+
         stage('Build') {
             steps {
                 script {
