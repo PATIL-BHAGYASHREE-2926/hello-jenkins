@@ -113,6 +113,18 @@ async function loadJenkinsData() {
     }
 }
 
+// Update the Infrastructure Jenkins badge directly by ID
+function updateInfraBadge(builds) {
+    const badge = document.getElementById("jenkins-infra-status");
+    if (!badge || !builds || builds.length === 0) return;
+
+    const latest = builds.reduce((a, b) => (b.number > a.number ? b : a));
+    const result = latest.result || "RUNNING";
+
+    badge.textContent = `Build #${latest.number} ${result}`;
+    badge.className = result === "SUCCESS" ? "success-tag" : "tag";
+}
+
 // 4. Update Dashboard
 function updateDashboard(data) {
 
@@ -126,6 +138,7 @@ function updateDashboard(data) {
 
     updateLatestBuild(data.builds);
     updateBuildHistory(data.builds);
+    updateInfraBadge(data.builds);
 }
 
 
@@ -225,7 +238,7 @@ function updateBuildHistory(builds) {
                 openBuildConsole(build.number);
             });
         }
-        
+
         const dateText = document.createElement("p");
         dateText.className = "muted";
         dateText.textContent = date;
