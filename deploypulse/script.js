@@ -84,6 +84,9 @@ async function loadJenkinsData() {
     try {
         const { data, source } = await fetchBuildData();
 
+        // Record the source before rendering, so the history can disable console buttons
+        document.body.dataset.source = source;
+
         updateDashboard(data);
 
         const status = document.getElementById("dashboard-status");
@@ -210,10 +213,19 @@ function updateBuildHistory(builds) {
         button.className = "build-link";
         button.type = "button";
         button.textContent = `Build #${build.number} →`;
-        button.addEventListener("click", () => {
-            openBuildConsole(build.number);
-        });
 
+                if (document.body.dataset.source === "snapshot") {
+            button.disabled = true;
+            button.style.color = "#8290a8";
+            button.style.cursor = "default";
+            button.style.textDecoration = "none";
+            button.title = "Console logs need the live backend";
+        } else {
+            button.addEventListener("click", () => {
+                openBuildConsole(build.number);
+            });
+        }
+        
         const dateText = document.createElement("p");
         dateText.className = "muted";
         dateText.textContent = date;
