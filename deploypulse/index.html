@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -155,7 +154,8 @@
             <b>Build #8</b>
             <p class="muted">deploypulse-pipeline</p>
           </div>
-              <span id="jenkins-infra-status" class="tag">Loading...</span>
+
+          <span class="success-tag">Loading...</span>
         </div>
 
         <div class="details">
@@ -190,7 +190,7 @@
 
         <div class="infra-row">
           <span>⚙ Jenkins</span>
-            <span class="tag">Loading...</span>
+          <span id="jenkins-infra-status" class="tag">Loading...</span>
         </div>
 
         <div class="infra-row">
@@ -204,21 +204,19 @@
 
 
     <!-- Build History -->
- 
     <section class="panel" id="build-history">
-        <div class="panel-heading">
-            <div>
-                <h3>Build History</h3>
-                <p class="muted">Recent Jenkins pipeline executions</p>
-            </div>
-            <span class="tag">SNAPSHOT FROM LAST RUN</span>
+      <div class="panel-heading">
+        <div>
+          <h3>Build History</h3>
+          <p class="muted">Recent Jenkins pipeline executions</p>
         </div>
+        <span class="tag">SNAPSHOT FROM LAST RUN</span>
+      </div>
 
-        <div id="live-build-history" class="details">
-            <p class="muted">Loading Jenkins build history...</p>
-        </div>
+      <div id="live-build-history" class="details">
+        <p class="muted">Loading Jenkins build history...</p>
+      </div>
     </section>
-
 
 
     <!-- Footer -->
