@@ -5,6 +5,7 @@
 
 const API_BASE = "http://localhost:3000/api";
 
+
 // 1. Live Clock
 function updateClock() {
     const clock = document.getElementById("clock");
@@ -44,7 +45,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 // 3. Fetch Jenkins Data
-async function loadJenkinsData() {
+// Try the live backend first (local development).
+// If it's unreachable (for example on EC2), fall back to builds.json,
+// which the pipeline writes into the same folder as index.html.
+const SNAPSHOT_URL = "builds.json";
+
+async function fetchBuildData() {
     try {
         const response = await fetch(`${API_BASE}/builds`);
 
@@ -58,12 +64,36 @@ async function loadJenkinsData() {
             throw new Error(data.message || "Unable to load builds");
         }
 
+        return { data, source: "live" };
+
+    } catch (liveError) {
+        console.warn("Live backend unavailable, using snapshot:", liveError.message);
+
+        const response = await fetch(SNAPSHOT_URL, { cache: "no-store" });
+
+        if (!response.ok) {
+            throw new Error(`Snapshot error: ${response.status}`);
+        }
+
+        const data = await response.json();
+        return { data, source: "snapshot" };
+    }
+}
+
+async function loadJenkinsData() {
+    try {
+        const { data, source } = await fetchBuildData();
+
         updateDashboard(data);
 
         const status = document.getElementById("dashboard-status");
-        if (status) status.textContent = "Jenkins Connected";
+        if (status) {
+            status.textContent = source === "live"
+                ? "Jenkins Connected"
+                : "Snapshot from last pipeline run";
+        }
 
-        console.log("Jenkins data updated:", data);
+        console.log(`Jenkins data updated (${source}):`, data);
 
     } catch (error) {
         console.error("Dashboard update failed:", error);
@@ -79,7 +109,6 @@ async function loadJenkinsData() {
         }
     }
 }
-
 
 // 4. Update Dashboard
 function updateDashboard(data) {
@@ -111,6 +140,16 @@ function updateLatestBuild(builds) {
     );
 
     if (!latestPanel) return;
+
+    const infraStatus = document.getElementById("jenkins-infra-status");
+
+    if (infraStatus) {
+        infraStatus.textContent =
+            `Build #${latestBuild.number} ${latestBuild.result || "RUNNING"}`;
+
+        infraStatus.className =
+            latestBuild.result === "SUCCESS" ? "success-tag" : "tag";
+    }
 
     const buildName = latestPanel.querySelector("b");
     const statusTag = latestPanel.querySelector(".success-tag");
